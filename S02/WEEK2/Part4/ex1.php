@@ -1,119 +1,198 @@
 <?php
-// /Applications/XAMPP/xamppfiles/htdocs/s02/WEEK2/Part4/ex1.php
-
 function calculateBMI($kg, $m) {
-    $kg = floatval($kg);
-    $m = floatval($m);
-    if ($m <= 0) {
-        return null;
-    }
-    $bmi = $kg / ($m * $m);
-    $bmiRounded = round($bmi, 1);
+  $kg = (float)$kg;
+  $m  = (float)$m;
 
-    if ($bmi < 18.5) {
-        $category = 'Under';
-    } elseif ($bmi <= 24.9) {
-        $category = 'Normal';
-    } else {
-        $category = 'Over';
-    }
+  if ($kg <= 0 || $m <= 0) {
+    return ['bmi' => null, 'category' => 'Invalid'];
+  }
 
-    return [
-        'bmi' => $bmiRounded,
-        'category' => $category,
-        'text' => "BMI: {$bmiRounded} ({$category})"
-    ];
+  $bmi = $kg / ($m * $m);
+
+  if ($bmi < 18.5) $category = 'Under';
+  elseif ($bmi < 25) $category = 'Normal'; // 18.5 - 24.9
+  else $category = 'Over';                 // 25+
+
+  return ['bmi' => $bmi, 'category' => $category];
 }
 
-$result = null;
-$error = '';
-$kg = isset($_POST['kg']) ? $_POST['kg'] : '';
-$m = isset($_POST['m']) ? $_POST['m'] : '';
+$resultText = '';
+$resultMeta = ['category' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($kg === '' || $m === '') {
-        $error = 'Please provide weight (kg) and height (m).';
-    } elseif (!is_numeric($kg) || !is_numeric($m) || floatval($kg) <= 0 || floatval($m) <= 0) {
-        $error = 'Enter valid positive numbers for weight and height.';
-    } else {
-        $result = calculateBMI($kg, $m);
-        if ($result === null) {
-            $error = 'Height must be greater than zero.';
-        }
-    }
+  $kg = $_POST['kg'] ?? '';
+  $m  = $_POST['m']  ?? '';
+
+  $res = calculateBMI($kg, $m);
+  $resultMeta = $res;
+
+  if ($res['bmi'] === null) {
+    $resultText = 'Vui lòng nhập cân nặng và chiều cao hợp lệ.';
+  } else {
+    $bmi1 = number_format($res['bmi'], 1);
+    $resultText = "BMI: {$bmi1} ({$res['category']})"; // example_output format
+  }
 }
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BMI Calculator</title>
-<style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa4b2}
-    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:
-        radial-gradient(1200px 600px at 10% 10%, rgba(6,182,212,0.06), transparent 10%),
-        linear-gradient(180deg,#071021 0%,#071021 40%,#071528 100%);color:#e6eef6}
-    .card{width:100%;max-width:540px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
-        border:1px solid rgba(255,255,255,0.04);padding:28px;border-radius:12px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
-    h1{margin:0 0 8px;font-size:20px;letter-spacing:-0.2px}
-    p.lead{margin:0 0 18px;color:var(--muted);font-size:14px}
-    form{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;margin-bottom:18px}
-    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-    input[type="number"]{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
-        background:transparent;color:inherit;font-size:15px}
-    .full{grid-column:1 / -1}
-    button{appearance:none;border:0;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#2dd4bf);
-        color:#042029;font-weight:600;cursor:pointer;font-size:15px}
-    .result{padding:14px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
-        border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:12px}
-    .badge{font-weight:700;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:14px}
-    .error{color:#ffc1c1;background:rgba(255,192,192,0.04);padding:10px;border-radius:8px;font-size:14px}
-    footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:right}
-    @media (max-width:520px){form{grid-template-columns:1fr} .full{grid-column:auto}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BMI Calculator</title>
+  <style>
+    :root{
+      --bg1:#070b14;
+      --bg2:#0b1220;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 500px at 18% 0%, #1c4ed8 0%, transparent 55%),
+        radial-gradient(900px 500px at 92% 15%, #a21caf 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg1) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 28px;
+    }
+    .wrap{ width:min(980px,100%); display:grid; gap:14px; grid-template-columns: 1.2fr .8fr; }
+    @media (max-width: 860px){ .wrap{ grid-template-columns: 1fr; } }
+    .card{
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, var(--card) 0%, rgba(255,255,255,.03) 100%);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow:hidden;
+    }
+    .header{ padding:18px 18px 10px; border-bottom: 1px solid rgba(255,255,255,.10); }
+    h1{ margin:0; font-size:22px; letter-spacing:.2px; }
+    .sub{ margin:6px 0 0; color: var(--muted); font-size: 13px; }
+
+    form{ padding:18px; display:grid; gap:12px; }
+    .row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    @media (max-width: 520px){ .row{ grid-template-columns: 1fr; } }
+
+    label{ display:block; font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+    .field{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      border-radius: 14px;
+      padding: 12px 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    input{
+      width:100%;
+      border:none;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .unit{
+      color: var(--muted);
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: rgba(0,0,0,.12);
+      white-space:nowrap;
+    }
+    .actions{ display:flex; gap:10px; align-items:center; }
+    button{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 650;
+      letter-spacing:.2px;
+    }
+    button:hover{ background: rgba(255,255,255,.14); }
+    .hint{ color: var(--muted); font-size: 12px; }
+
+    .panel{ padding:18px; }
+    .resultBox{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 14px;
+      display:grid;
+      gap:10px;
+    }
+    .resultTitle{ margin:0; color: var(--muted); font-size: 13px; }
+    .resultValue{
+      margin:0;
+      font-size: 22px;
+      font-weight: 750;
+      letter-spacing:.2px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      font-weight: 700;
+      width: fit-content;
+    }
+    .Under { border-color: rgba(255, 210, 120, .35); background: rgba(255,210,120,.12); }
+    .Normal{ border-color: rgba(80, 255, 190, .35); background: rgba(80,255,190,.12); }
+    .Over  { border-color: rgba(255, 120, 120, .35); background: rgba(255,120,120,.12); }
+    .Invalid{ border-color: rgba(180,180,180,.25); background: rgba(180,180,180,.10); }
+
+    .ranges{
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .ranges code{
+      color: rgba(255,255,255,.85);
+      background: rgba(0,0,0,.18);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.10);
+    }
+  </style>
 </head>
 <body>
-<main class="card" role="main">
-    <h1>BMI Calculator</h1>
-    <p class="lead">Calculate your Body Mass Index and see the category (Under / Normal / Over).</p>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <h1>BMI Calculator</h1>
+        <p class="sub">Nhập cân nặng (kg) và chiều cao (m) để tính BMI và phân loại.</p>
+      </div>
 
-    <?php if ($error): ?>
-        <div class="error"><?php echo htmlspecialchars($error); ?></div>
-    <?php endif; ?>
-
-    <form method="post" novalidate>
-        <div>
-            <label for="kg">Weight (kg)</label>
-            <input id="kg" name="kg" type="number" step="0.1" min="0" placeholder="e.g. 70.0" value="<?php echo htmlspecialchars($kg); ?>">
-        </div>
-        <div>
-            <label for="m">Height (m)</label>
-            <input id="m" name="m" type="number" step="0.01" min="0" placeholder="e.g. 1.75" value="<?php echo htmlspecialchars($m); ?>">
-        </div>
-
-        <div class="full" style="display:flex;gap:10px;align-items:center">
-            <button type="submit">Calculate</button>
-            <?php if ($result): ?>
-                <div class="result" style="margin-left:auto">
-                    <div class="badge"><?php echo htmlspecialchars($result['bmi']); ?></div>
-                    <div>
-                        <div style="font-weight:700">BMI</div>
-                        <div style="color:var(--muted)"><?php echo htmlspecialchars("({$result['category']})"); ?></div>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
-    </form>
-
-    <?php if ($result): ?>
-        <div style="margin-top:8px;font-size:15px">
-            <?php echo htmlspecialchars($result['text']); ?>
-        </div>
-    <?php endif; ?>
-
-    <footer>Example: "BMI: 22.1 (Normal)"</footer>
-</main>
-</body>
-</html>
+      <form method="post">
+        <div class="row">
+          <div>
+            <label for="kg">Cân nặng</label>
+            <div class="field">
+              <input id="kg" name="kg" type="number" step="0.1" min="0" placeholder="VD: 65"
+                     value="<?php echo isset($_POST['kg']) ? htmlspecialchars($_POST['kg']) : ''; ?>">
+              <span class="unit">kg</span>
+            </div>
+          </div>
+          <div>
+            <label for="m">Chiều cao</label>
+            <div class="field">
+              <input id="m" name="m" type="number" step="0.01" min="0" placeholder="VD: 1.70"
+                     value

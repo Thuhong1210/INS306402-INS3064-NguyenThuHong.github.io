@@ -6,5 +6,5 @@ function greet(string $name): string {
 }
 
 // Example usage:
-// $input = greet("Sam");
-// echo $input; // Output: Hello, Sam!
+$input = greet("Sam");
+echo $input; // Output: Hello, Sam!

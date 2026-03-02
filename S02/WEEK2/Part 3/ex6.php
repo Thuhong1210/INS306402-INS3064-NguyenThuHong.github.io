@@ -11,3 +11,7 @@ function add(int $a, int $b): int
 {
     return $a + $b;
 }
+
+// Example usage:
+$input = add(5, 10);
+echo $input; // Output: 15
