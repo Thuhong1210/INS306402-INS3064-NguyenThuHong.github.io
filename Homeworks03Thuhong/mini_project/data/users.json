@@ -1,0 +1,24 @@
+[
+    {
+        "username": "thuhong2022",
+        "email": "thuhong@mis.edu.vn",
+        "fullname": "Nguy\u1ec5n Thu H\u1ed3ng",
+        "password": "$2y$10$5sqU8dGhykbY2AUTJrYpeelCpgWUBICRrBZG7b100OGZC\/Yi8NDcu",
+        "bio": "",
+        "avatar": "",
+        "created_at": "2026-03-02 21:16:01",
+        "fail_count": 4,
+        "locked_until": 1772483665
+    },
+    {
+        "username": "Thuhong",
+        "email": "22071101@vnu.edu.vn",
+        "fullname": "Nguy\u1ec5n Thu H\u1ed3ng",
+        "password": "$2y$10$D.3spSEBQot7e.lJIoWvLeB64NmNd1f4nyfNdNO9mWNyxiEsARyXG",
+        "bio": "Em b\u00e9 th\u1ecf",
+        "avatar": "Thuhong_1772483607.jpg",
+        "created_at": "2026-03-02 21:30:01",
+        "fail_count": 0,
+        "locked_until": 0
+    }
+]
