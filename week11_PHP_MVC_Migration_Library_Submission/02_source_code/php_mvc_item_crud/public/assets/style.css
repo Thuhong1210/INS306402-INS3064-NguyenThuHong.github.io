@@ -1,0 +1,376 @@
+/*
+ * public/assets/style.css
+ *
+ * Author  : Hoàng Cẩm Anh  |  MSSV: INS3064
+ * Purpose : Simple, clean, professional stylesheet for the Item CRUD app.
+ *           Uses soft colors (white, light-gray, indigo), rounded corners,
+ *           hover effects, and Google Fonts – no CSS framework needed.
+ */
+
+/* ── Google Font ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── CSS Custom Properties (design tokens) ───────────────────────── */
+:root {
+  --color-bg        : #f4f6fb;
+  --color-white     : #ffffff;
+  --color-primary   : #4f6ef7;       /* indigo-blue */
+  --color-primary-dk: #3a56d4;       /* darker on hover */
+  --color-danger    : #e3504f;
+  --color-danger-dk : #c63d3c;
+  --color-text      : #2d3a4e;
+  --color-muted     : #7a8b9a;
+  --color-border    : #dde3ef;
+  --color-row-hover : #eef1fb;
+  --color-nav-bg    : #2d3a4e;
+  --color-nav-text  : #cdd5e0;
+  --color-nav-active: #ffffff;
+  --radius-sm       : 6px;
+  --radius-md       : 10px;
+  --radius-lg       : 14px;
+  --shadow-sm       : 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md       : 0 4px 16px rgba(0,0,0,0.10);
+  --transition      : 0.2s ease;
+  --container-max   : 900px;
+}
+
+/* ── Reset & base ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+a:hover {
+  opacity: 0.75;
+}
+
+/* ── Site Header / Navbar ────────────────────────────────────────── */
+.site-header {
+  background-color: var(--color-nav-bg);
+  color: var(--color-nav-active);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header .logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-nav-active);
+  letter-spacing: 0.3px;
+}
+
+.site-header .logo span {
+  color: var(--color-primary);
+}
+
+/* Navigation links inside the header */
+.site-header nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.site-header nav a {
+  color: var(--color-nav-text);
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+}
+
+.site-header nav a:hover {
+  background: rgba(255,255,255,0.10);
+  color: var(--color-nav-active);
+  opacity: 1;
+}
+
+/* ── Main content container ──────────────────────────────────────── */
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Card (panel) ────────────────────────────────────────────────── */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Section title row (heading + "Add" button side by side) ─────── */
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-title h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+/* Primary action button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-primary);
+  color: #fff !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), opacity 1s;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: var(--color-primary-dk);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Danger (delete) button */
+.btn-danger {
+  background: var(--color-danger);
+}
+
+.btn-danger:hover {
+  background: var(--color-danger-dk);
+}
+
+/* Secondary (outlined) cancel link */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-muted) !important;
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background: var(--color-bg);
+  opacity: 1;
+}
+
+/* ── Data table ──────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead tr {
+  background: var(--color-bg);
+  border-bottom: 2px solid var(--color-border);
+}
+
+thead th {
+  text-align: left;
+  padding: 11px 14px;
+  font-weight: 600;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition);
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* Hover highlight on table rows */
+tbody tr:hover {
+  background: var(--color-row-hover);
+}
+
+tbody td {
+  padding: 12px 14px;
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+/* ID column is narrow and muted */
+tbody td:first-child {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  width: 50px;
+}
+
+/* Actions column: align links next to each other */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Inline action links inside the table */
+.action-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.action-link.edit {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.action-link.edit:hover {
+  background: var(--color-primary);
+  color: #fff;
+  opacity: 1;
+}
+
+.action-link.delete {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.action-link.delete:hover {
+  background: var(--color-danger);
+  color: #fff;
+  opacity: 1;
+}
+
+/* Empty-state row message */
+.empty-state {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 2.5rem 0;
+  font-style: italic;
+}
+
+/* ── Forms ───────────────────────────────────────────────────────── */
+.form-card {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.form-card h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+/* Each label wraps its input for natural stacking */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px 13px;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79,110,247,0.15);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.6rem;
+}
+
+/* ── Error list ──────────────────────────────────────────────────── */
+.errors {
+  background: #fff0f0;
+  border: 1px solid #f5c6c6;
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  margin-bottom: 1.2rem;
+}
+
+.errors ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.errors ul li {
+  font-size: 0.88rem;
+  color: var(--color-danger);
+  font-weight: 500;
+}
+
+.errors ul li::before {
+  content: '⚠ ';
+}
+
+/* ── Site Footer ─────────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-white);
+  margin-top: auto;
+}

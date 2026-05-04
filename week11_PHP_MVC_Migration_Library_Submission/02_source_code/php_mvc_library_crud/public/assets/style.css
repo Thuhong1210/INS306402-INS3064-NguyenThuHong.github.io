@@ -1,0 +1,124 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.site-header {
+    background: #1f2937;
+    color: white;
+    padding: 24px 48px;
+}
+
+.site-header h1 {
+    margin: 0 0 12px;
+}
+
+.site-header a {
+    color: white;
+    margin-right: 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+th {
+    background: #f9fafb;
+}
+
+.actions a {
+    margin-right: 10px;
+}
+
+.btn, button {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    background: #e0f2fe;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.form-card {
+    max-width: 640px;
+}
+
+label {
+    display: block;
+    margin: 14px 0;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+.errors {
+    color: #991b1b;
+    background: #fee2e2;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-actions {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 24px;
+    color: #555;
+}
